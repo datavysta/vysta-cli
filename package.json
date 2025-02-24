@@ -12,8 +12,9 @@
     ],
     "scripts": {
       "build": "tsc",
-      "test": "jest",
-      "prepublishOnly": "npm run build"
+      "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+      "prepublishOnly": "npm run build",
+      "test:generate": "node ./dist/index.js http://localhost:8080 --output ./test-output"
     },
     "repository": {
       "type": "git",
@@ -38,7 +39,8 @@
     },
     "dependencies": {
       "commander": "^11.1.0",
-      "inquirer": "^9.2.12"
+      "inquirer": "^9.2.12",
+      "ts-morph": "^21.0.1"
     },
     "devDependencies": {
       "@types/inquirer": "^9.0.7",

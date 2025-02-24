@@ -9,16 +9,16 @@ Command line interface for generating TypeScript models from your Vysta server.
 npm install -g @datavysta/vysta-cli
 
 # Or run directly with npx
-npx @datavysta/vysta-cli generate your-server.com
+npx @datavysta/vysta-cli your-server.com
 ```
 
 ## Usage
 
-The CLI provides commands to generate TypeScript models from your Vysta server:
+The CLI generates TypeScript models from your Vysta server:
 
 ```bash
 # Generate models from a server
-vysta-cli generate your-server.com
+vysta-cli your-server.com
 
 # The CLI will ask:
 #   Where should we save the models? (./src/models)
@@ -26,25 +26,30 @@ vysta-cli generate your-server.com
 
 ### Generated Files
 
-The CLI will generate two files in your specified directory:
-- `services.ts` - Service class definitions for your entities
+The CLI will generate three files in your specified directory:
+- `services.ts` - Service class definitions for your entities (preserves your custom methods when regenerating)
 - `types.ts` - TypeScript interfaces for your data schema
+- `workflows.ts` - Workflow definitions for your business processes
+
+### Custom Methods
+
+When regenerating services, the CLI will preserve any custom methods you've added to your service classes. This allows you to extend the generated services with your own functionality without losing changes on subsequent generations.
 
 ### URL Formats
 
 The CLI supports various URL formats:
 ```bash
 # Default (HTTPS)
-vysta-cli generate your-server.com
+vysta-cli your-server.com
 
 # Explicit HTTPS
-vysta-cli generate https://your-server.com
+vysta-cli https://your-server.com
 
 # HTTP if required
-vysta-cli generate http://your-server.com
+vysta-cli http://your-server.com
 
 # With port
-vysta-cli generate your-server.com:8080
+vysta-cli your-server.com:8080
 ```
 
 ## Development
@@ -63,7 +68,7 @@ npm run build
 npm test
 
 # Run locally
-./dist/index.js generate your-server.com
+./dist/index.js your-server.com
 ```
 
 ## License
