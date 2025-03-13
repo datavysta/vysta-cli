@@ -9,7 +9,7 @@ Command line interface for generating TypeScript models from your Vysta server.
 npm install -g @datavysta/vysta-cli
 
 # Or run directly with npx
-npx @datavysta/vysta-cli your-server.com
+npx @datavysta/vysta-cli@latest your-domain.com
 ```
 
 ## Usage
