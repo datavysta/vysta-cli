@@ -8,7 +8,8 @@ import { downloadFile } from './download.js';
 const ENDPOINTS = {
   services: '/api/rest/typescript/services.ts',
   types: '/api/rest/typescript/types.ts',
-  workflows: '/api/rest/typescript/workflows.ts'
+  workflows: '/api/rest/typescript/workflows.ts',
+  files: '/api/rest/typescript/files.ts'
 };
 
 function normalizeUrl(baseUrl: string): string {
@@ -134,16 +135,18 @@ export async function generate(baseUrl: string, outputDir?: string) {
     const servicesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.services}`);
     const typesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.types}`);
     const workflowsContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.workflows}`);
+    const filesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.files}`);
     
     // Save the files
-    const files = ['services.ts', 'types.ts', 'workflows.ts'];
+    const files = ['services.ts', 'types.ts', 'workflows.ts', 'files.ts'];
     await Promise.all([
       fsPromises.writeFile(
         path.join(absolutePath, 'services.ts'), 
         mergeServiceClass(path.join(absolutePath, 'services.ts'), servicesContent)
       ),
       fsPromises.writeFile(path.join(absolutePath, 'types.ts'), typesContent),
-      fsPromises.writeFile(path.join(absolutePath, 'workflows.ts'), workflowsContent)
+      fsPromises.writeFile(path.join(absolutePath, 'workflows.ts'), workflowsContent),
+      fsPromises.writeFile(path.join(absolutePath, 'files.ts'), filesContent)
     ]);
     
     console.log('\nSaved files:');
