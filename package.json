@@ -1,6 +1,6 @@
 {
     "name": "@datavysta/vysta-cli",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Generate TypeScript models from your Vysta server",
     "main": "dist/index.js",
     "type": "module",
