@@ -27,14 +27,10 @@ vysta-cli your-server.com
 ### Generated Files
 
 The CLI will generate four files in your specified directory:
-- `services.ts` - Service class definitions for your entities (preserves your custom methods when regenerating)
+- `services.ts` - Service class definitions for your entities
 - `types.ts` - TypeScript interfaces for your data schema
 - `workflows.ts` - Workflow definitions for your business processes
 - `files.ts` - File and asset definitions for your application
-
-### Custom Methods
-
-When regenerating services, the CLI will preserve any custom methods you've added to your service classes. This allows you to extend the generated services with your own functionality without losing changes on subsequent generations.
 
 ### URL Formats
 
