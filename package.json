@@ -16,7 +16,8 @@
         "prepublishOnly": "npm run build",
         "test:generate": "node ./dist/index.js http://localhost:8080 --output ./test-output",
         "lint": "eslint . --ext .ts",
-        "lint:fix": "eslint . --ext .ts --fix"
+        "lint:fix": "eslint . --ext .ts --fix",
+        "check": "tsc --noEmit && eslint src --ext .ts --ignore-pattern \"**/__tests__/**\" --ignore-pattern \"**/__mocks__/**\""
     },
     "repository": {
         "type": "git",

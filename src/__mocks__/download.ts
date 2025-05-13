@@ -1,2 +1,2 @@
 import { jest } from '@jest/globals';
-export const downloadFile = jest.fn(); 
+export const downloadFile = jest.fn();

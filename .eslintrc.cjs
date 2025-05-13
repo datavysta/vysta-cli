@@ -23,4 +23,15 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
   ignorePatterns: ['dist/', 'node_modules/', '**/*.js', '**/*.cjs'],
+  overrides: [
+    {
+      files: ['**/__tests__/**/*', 'jest.setup.ts'],
+      parserOptions: {
+        project: null, // Disable project for test files
+      },
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off', // Disable unused vars check in test files
+      },
+    },
+  ],
 }; 
