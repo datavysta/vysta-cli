@@ -18,3 +18,7 @@ npm-debug.log*
 
 # OS
 .DS_Store
+
+# Test directories
+src/__mocks__/
+src/__tests__/
