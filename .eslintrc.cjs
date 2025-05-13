@@ -22,7 +22,15 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
-  ignorePatterns: ['dist/', 'node_modules/', '**/*.js', '**/*.cjs'],
+  ignorePatterns: [
+    'dist/', 
+    'node_modules/', 
+    '**/*.js', 
+    '**/*.cjs', 
+    'src/__tests__/**',
+    'src/__mocks__/**',
+    'jest.setup.ts'
+  ],
   overrides: [
     {
       files: ['**/__tests__/**/*', 'jest.setup.ts'],
