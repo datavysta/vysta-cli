@@ -14,4 +14,4 @@ program
     generate(url, options.output);
   });
 
-program.parse(); 
+program.parse();
