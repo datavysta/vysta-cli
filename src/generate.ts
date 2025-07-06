@@ -22,7 +22,24 @@ function normalizeUrl(baseUrl: string): string {
   return `https://${baseUrl}`;
 }
 
-export async function generate(baseUrl: string, outputDir?: string) {
+export function buildQueryString(tags?: Record<string, string>): string {
+  if (!tags || Object.keys(tags).length === 0) {
+    return '';
+  }
+
+  const queryParams = Object.entries(tags)
+    .map(([tagName, tagValue]) => {
+      // Encode the tag name and value for URL safety
+      const encodedName = encodeURIComponent(tagName);
+      const encodedValue = encodeURIComponent(tagValue);
+      return `tags.${encodedName}=eq.${encodedValue}`;
+    })
+    .join('&');
+
+  return `?${queryParams}`;
+}
+
+export async function generate(baseUrl: string, outputDir?: string, tags?: Record<string, string>) {
   const finalOutputDir =
     outputDir ||
     (
@@ -42,13 +59,18 @@ export async function generate(baseUrl: string, outputDir?: string) {
 
   try {
     const normalizedBaseUrl = normalizeUrl(baseUrl);
+    const queryString = buildQueryString(tags);
     console.log('Downloading from:', normalizedBaseUrl);
+    
+    if (queryString) {
+      console.log('Applying filters:', queryString);
+    }
 
-    // Download all files
-    const servicesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.services}`);
-    const typesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.types}`);
-    const workflowsContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.workflows}`);
-    const filesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.files}`);
+    // Download all files with query parameters
+    const servicesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.services}${queryString}`);
+    const typesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.types}${queryString}`);
+    const workflowsContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.workflows}${queryString}`);
+    const filesContent = await downloadFile(`${normalizedBaseUrl}${ENDPOINTS.files}${queryString}`);
 
     // Save the files
     const files = ['services.ts', 'types.ts', 'workflows.ts', 'files.ts'];
@@ -64,6 +86,12 @@ export async function generate(baseUrl: string, outputDir?: string) {
     console.log(`\nSaved ${files.length} file(s)`);
   } catch (error) {
     console.error('Failed to download or save models:', error);
+    
+    // In test environment, throw the error instead of exiting
+    if (process.env.NODE_ENV === 'test' || process.env.JEST_WORKER_ID) {
+      throw error;
+    }
+    
     process.exit(1);
   }
 }
